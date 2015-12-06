@@ -1,0 +1,44 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+x=np.linspace(-1,1,40) 
+N=len(x) 
+u=np.zeros(40);
+g=np.zeros(40);
+
+for i in range(0, len(x)):
+	u[i]=-np.sin(x[i]*np.pi)
+
+plt.plot(x,u)
+
+dt=0.6
+t=0
+
+while t<30:
+	for i in range(0,N):
+		if i==0:
+			uR=u[1]
+			uL=u[N-1]
+			uLL=u[N-2]
+		elif i==1:
+			uR=u[2]
+			uL=u[i-1]
+			uLL=u[N-1]
+		elif i==N-1:
+			uR=u[0]
+			uL=u[N-2]
+			uLL=u[N-3]
+		else:
+			uR=u[i+1]
+			uL=u[i-1]
+			uLL=u[i-2]
+			i=i
+
+		g[i] = u[i]-0.8*(u[i]-uL)-0.04*(uR-u[i])+0.04*(uL-uLL)
+
+	for i in range(0, len(x)):
+		u[i]=g[i]
+	t=t+dt
+
+plt.plot(x,g,'or', alpha=0.6)
+plt.show()
