@@ -1,0 +1,40 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+x=np.linspace(-1,1,600) 
+N=len(x) 
+u=np.zeros(600);
+g=np.zeros(600);
+
+for i in range(0, len(x)):
+	if np.absolute(x[i]) < 0.333:
+		u[i] = 1
+	else:
+		u[i] = 0
+
+plt.plot(x,u)
+
+dt=0.0533
+t=0
+
+while t<40:
+	for i in range(0, len(x)):
+		if i==0:
+			uL=u[N-1]
+			uLL=u[N-2]
+		elif i==1:
+			uL=u[i-1]
+			uLL=u[N-1]
+		else:
+			uL=u[i-1]
+			uLL=u[i-2]
+			i=i
+
+		g[i] = u[i]-0.4*(3*u[i]-4*uL+uLL)+0.32*(u[i]-2*uL+uLL)
+
+	for i in range(0, len(x)):
+		u[i]=g[i]
+	t=t+dt
+
+plt.plot(x,g,'-r', alpha=0.6)
+plt.show()
