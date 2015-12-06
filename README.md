@@ -4,8 +4,8 @@ The code is specific to solve the equations in Computational Gas Dynamics by Lan
 
 The schemes involved are:
 
-Lax Friedrichs Scheme
-Lax Wendroff Scheme
-Godonov Scheme
-Beam Warming Scheme
-Fromms Scheme
+Lax Friedrichs Scheme,
+Lax Wendroff Scheme,
+Godonov Scheme,
+Beam Warming Scheme,
+Fromms Scheme.
