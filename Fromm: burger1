@@ -1,0 +1,57 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+x=np.linspace(-1,1,40) 
+N=len(x) 
+u=np.zeros(40);
+g=np.zeros(40);
+
+for i in range(0, len(x)):
+	if float('-inf') < x[i] < -0.33:
+		u[i] = 0
+	elif -0.33 < x[i] < 0.27:
+		u[i] = (x[i]+0.33)*1.666
+	elif -0.33 < x[i] < 0.63:
+		u[i] = 1
+	elif 0.63 < x[i] < float('inf'):
+		u[i] = 0
+
+plt.plot(x,u)
+
+for i in range(0, len(x)):
+	if np.absolute(x[i]) < 0.333:
+		u[i] = 1
+	else:
+		u[i] = 0
+
+dt=0.04
+t=0
+
+while t<0.6:
+	for i in range(0,N):
+		if i==0:
+			uR=u[1]
+			uL=u[N-1]
+			uLL=u[N-2]
+		elif i==1:
+			uR=u[2]
+			uL=u[i-1]
+			uLL=u[N-1]
+		elif i==N-1:
+			uR=u[0]
+			uL=u[N-2]
+			uLL=u[N-3]
+		else:
+			uR=u[i+1]
+			uL=u[i-1]
+			uLL=u[i-2]
+			i=i
+
+		g[i] = u[i]-0.4*(u[i]**2-uL**2)-0.04*(uR-u[i])+0.04*(uL-uLL)
+
+	for i in range(0, len(x)):
+		u[i]=g[i]
+	t=t+dt
+
+plt.plot(x,g,'or', alpha=0.6)
+plt.show()
